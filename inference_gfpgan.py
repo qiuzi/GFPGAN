@@ -22,7 +22,7 @@ def main():
     parser.add_argument('-o', '--output', type=str, default='results', help='Output folder. Default: results')
     # we use version to select models, which is more user-friendly
     parser.add_argument(
-        '-v', '--version', type=str, default='1.3', help='GFPGAN model version. Option: 1 | 1.2 | 1.3. Default: 1.3')
+        '-v', '--version', type=str, default='1.4', help='GFPGAN model version. Option: 1 | 1.2 | 1.3. Default: 1.3')
     parser.add_argument(
         '-s', '--upscale', type=int, default=2, help='The final upsampling scale of the image. Default: 2')
 
@@ -31,7 +31,7 @@ def main():
     parser.add_argument(
         '--bg_tile',
         type=int,
-        default=400,
+        default=0,
         help='Tile size for background sampler, 0 for no tile during testing. Default: 400')
     parser.add_argument('--suffix', type=str, default=None, help='Suffix of the restored faces')
     parser.add_argument('--only_center_face', action='store_true', help='Only restore the center face')
@@ -138,6 +138,8 @@ def main():
             paste_back=True,
             weight=args.weight)
 
+        # The following code for saving cropped faces, restored faces, and comparison images has been commented out
+        """
         # save faces
         for idx, (cropped_face, restored_face) in enumerate(zip(cropped_faces, restored_faces)):
             # save cropped face
@@ -153,6 +155,7 @@ def main():
             # save comparison image
             cmp_img = np.concatenate((cropped_face, restored_face), axis=1)
             imwrite(cmp_img, os.path.join(args.output, 'cmp', f'{basename}_{idx:02d}.png'))
+        """
 
         # save restored img
         if restored_img is not None:
@@ -162,9 +165,9 @@ def main():
                 extension = args.ext
 
             if args.suffix is not None:
-                save_restore_path = os.path.join(args.output, 'restored_imgs', f'{basename}_{args.suffix}.{extension}')
+                save_restore_path = os.path.join(args.output, f'{basename}_{args.suffix}.{extension}')
             else:
-                save_restore_path = os.path.join(args.output, 'restored_imgs', f'{basename}.{extension}')
+                save_restore_path = os.path.join(args.output, f'{basename}.{extension}')
             imwrite(restored_img, save_restore_path)
 
     print(f'Results are in the [{args.output}] folder.')
