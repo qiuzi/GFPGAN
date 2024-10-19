@@ -24,10 +24,10 @@ def main():
     parser.add_argument(
         '-v', '--version', type=str, default='1.4', help='GFPGAN model version. Option: 1 | 1.2 | 1.3. Default: 1.3')
     parser.add_argument(
-        '-s', '--upscale', type=int, default=2, help='The final upsampling scale of the image. Default: 2')
+        '-s', '--upscale', type=int, default=1, help='The final upsampling scale of the image. Default: 2')
 
     parser.add_argument(
-        '--bg_upsampler', type=str, default='realesrgan', help='background upsampler. Default: realesrgan')
+        '--bg_upsampler', type=str, default='None', help='background upsampler. Default: realesrgan')
     parser.add_argument(
         '--bg_tile',
         type=int,
@@ -41,7 +41,7 @@ def main():
         type=str,
         default='auto',
         help='Image extension. Options: auto | jpg | png, auto means using the same extension as inputs. Default: auto')
-    parser.add_argument('-w', '--weight', type=float, default=0.5, help='Adjustable weights.')
+    parser.add_argument('-w', '--weight', type=float, default=10, help='Adjustable weights.')
     args = parser.parse_args()
 
     args = parser.parse_args()
